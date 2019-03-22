@@ -1,0 +1,443 @@
+{% extends 'original.html' %}
+{% load static %}
+{% block content %}
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text">
+        <div class="intro-lead-in">Welcome To T-Bears GUI!!</div>
+        <div class="intro-heading text-uppercase">Let's T-Bears it!</div>
+      </div>
+    </div>
+  </header>
+
+<body>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <!--<h2 class="section-heading text-uppercase">Step</h2>-->
+          <h3 class="section-subheading text-muted">ICONex 가 설치 되어있어야 진행 가능합니다. </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="timeline">
+            <!--ICONex 설치 확인-->
+            <li>
+              <div class="timeline-image">
+                <img class="rounded-circle img-fluid" src='{% static "img/about/1.jpg"%}' alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4>ICON wallet(ICONex)이<br> 설치되어있어야 합니다.</h4>
+                  <!--<h4 class="subheading">아래 버튼을 클릭해 주세요, 만약 False 가 나오면 크롬 마켓에서 다운로드해주세요</h4>-->
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted" href="https://chrome.google.com/webstore/detail/iconex/flpiciilemghbmfalicajoolhkkenfel?hl=ko">아래 버튼을 클릭해 주세요, <br> 만약 False 가 나오면 <br>크롬 마켓에서 다운로드해주세요</p>
+                </div>
+                    <button id="request-has-account" class="btn btn-primary btn-xl text-uppercase js-scroll-trigger">ICONex 설치 여부 확인하기</button>
+                    <p id="response-has-account">> Result : </p>
+              </div>
+            </li>
+            <!--Step2 주소 확인하기 시작-->
+            <li class="timeline-inverted">
+              <div class="timeline-image">
+                <img class="rounded-circle img-fluid" src='{% static "img/about/2.jpg"%}'  alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4>optional</h4>
+                  <h4 class="subheading">주소가 유효한지 확인해 볼 수 있습니다. </h4>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">아래 TextBox에 주소를 입력하고 버튼을 통해 주소가 유효한지 확인할 수 있습니다.<br> 가지고있는 EOA가 ICON의 주소규칙과 맞는지 확인합니다.</p>
+                </div>
+
+                <p>ICX Address : <input id="request-has-address-data" type="text" placeholder="hx23ada4a4b444acf8706a6f50bbc9149be1781e13" /></p>
+                <button id="request-has-address" class="btn btn-primary btn-xl text-uppercase js-scroll-trigger">입력한 주소 확인해 보기</button>
+                <p id="response-has-address">> Result : </p>
+              </div>
+            </li>
+            <!--Step2 지갑불러오기 시작-->
+            <li>
+              <div class="timeline-image">
+                <img class="rounded-circle img-fluid" src='{% static "img/about/3.jpg"%}'  alt="">
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <h4>ICONex 활용하기</h4>
+                  <h4 class="subheading">크롬 브라우저에 설치된 <br>ICON wallet(ICONex)를 통해 <br>지갑을 불러올 수도 있습니다. </h4>
+                </div>
+                <div class="timeline-body">
+                  <p class="text-muted">아래 버튼을 통해서 <br>ICONex에 있는 지갑을 불러올 수 있습니다. <br> 원하는 지갑을 선택하고 <br>confirm 버튼을 눌러주세요</p>
+                </div>
+                  <button id="request-address" class="btn btn-primary btn-xl text-uppercase js-scroll-trigger">ICONex 불러오기</button>
+                  <p id="response-address">> Selected ICX Address : </p>
+                <!---->
+              </div>
+            </li>
+            <li class="timeline-inverted">
+              <div class="timeline-image">
+                <h3>Do it!</h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Portfolio Grid -->
+  <section class="bg-light" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Transactions</h2>
+          <h3 class="section-subheading text-muted">아래의 이미지를 클릭하시면, 선택하신 종류의 트랜잭션을 보내기 위한 Json 요청 형식을 얻을 수 있습니다. </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-6 portfolio-item">
+          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+            <div class="portfolio-hover">
+              <div class="portfolio-hover-content">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src='{% static "img/portfolio/01-thumbnail.jpg"%}' alt="">
+          </a>
+          <div class="portfolio-caption">
+            <h4>Call</h4>
+            <p class="text-muted">상태를 조회할 수 있는 트랜잭션</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 portfolio-item">
+          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+            <div class="portfolio-hover">
+              <div class="portfolio-hover-content">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src='{% static "img/portfolio/02-thumbnail.jpg"%}'alt="">
+          </a>
+          <div class="portfolio-caption">
+            <h4>SendTransaction</h4>
+            <p class="text-muted">상태변화를 일으키는 트랜잭션</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6 portfolio-item">
+          <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
+            <div class="portfolio-hover">
+              <div class="portfolio-hover-content">
+                <i class="fas fa-plus fa-3x"></i>
+              </div>
+            </div>
+            <img class="img-fluid" src='{% static "img/portfolio/03-thumbnail.jpg"%}' alt="">
+          </a>
+          <div class="portfolio-caption">
+            <h4>ICXtransfer</h4>
+            <p class="text-muted">ICX를 전송하는 트랜잭션</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Modals -->
+
+  <!-- Modal 1 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <form id="request-score-form">
+                  <input type="radio" id="json-rpc-1" name="json-rpc" value="read-only" onclick="setRequestScoreForm()" disabled>
+                </form>
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">Call (Read only)</h2>
+                <p class="item-intro text-muted">Call 발동, 상태변화는 일으키지 않는다.</p>
+                <p>Param Data: <br><textarea id="score-data" rows="10"></textarea></p>
+                <button id="request-score">REQUEST_JSON-RPC</button>
+                <p>> Result : <br><textarea id="response-score" rows="10"></textarea></p>
+                <ul class="list-inline">
+                </ul>
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fas fa-times"></i>
+                  Close Project</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <form id="request-score-form">
+
+                  <!--<input type="radio" id="json-rpc-1" name="json-rpc" value="read-only" onclick="setRequestScoreForm()">-->
+                  <input type="radio" id="json-rpc-2" name="json-rpc" value="send-transaction" onclick="setRequestScoreForm()" disabled>
+                </form>
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">SendTransactioon</h2>
+                <p class="item-intro text-muted">상태를 변화시키는 트랜잭션을 발생시킨다 이말이야</p>
+                <p>Param Data: <br><textarea id="score-data" rows="10"></textarea></p>
+                <button id="request-score">REQUEST_JSON-RPC</button>
+                <p>> Result : <br><textarea id="response-score" rows="10"></textarea></p>
+
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fas fa-times"></i>
+                  Close Project</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3 -->
+  <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-dismiss="modal">
+          <div class="lr">
+            <div class="rl"></div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <div class="modal-body">
+                <!-- Project Details Go Here -->
+                <h2 class="text-uppercase">ICXtransfer</h2>
+               <form id="request-score-form">
+                  <input type="radio" id="json-rpc-3" name="json-rpc" value="icx-transfer" onclick="setRequestScoreForm()" disabled>
+                </form>
+                <p class="item-intro text-muted">ICX를 전송하는 트랜잭션을 발생시킨다 이말이야</p>
+                <p>Param Data: <br><textarea id="score-data" rows="10"></textarea></p>
+                <button id="request-score">REQUEST_JSON-RPC</button>
+                <p>> Result : <br><textarea id="response-score" rows="10"></textarea></p>
+
+
+                <button class="btn btn-primary" data-dismiss="modal" type="button">
+                  <i class="fas fa-times"></i>
+                  Close Project</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <script src="http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>
+    <script>
+        var iconService = window['icon-sdk-js']
+        var IconWallet = iconService.IconWallet
+        var IconAmount = iconService.IconAmount
+        var IconConverter = iconService.IconConverter
+        var IconBuilder = iconService.IconBuilder
+        var requestHasAccount = document.getElementById("request-has-account")
+        var responseHasAccount = document.getElementById("response-has-account")
+        var requestHasAddress = document.getElementById("request-has-address")
+        var requestHasAddressData = document.getElementById("request-has-address-data")
+        var responseHasAddress = document.getElementById("response-has-address")
+        var requestAddress = document.getElementById("request-address")
+        var responseAddress = document.getElementById("response-address")
+        var requestScore = document.getElementById("request-score")
+        var requestScoreForm = document.getElementById("request-score-form")
+        var responseScore = document.getElementById("response-score")
+        var requestSigning = document.getElementById("request-signing")
+        var responseSigning = document.getElementById("response-signing")
+        var sendAddress = document.getElementById("send-address")
+        var sendAmount = document.getElementById("send-amount")
+        var scoreData = document.getElementById("score-data")
+        var signingData = document.getElementById("signing-data")
+        var jsonRpc0 = document.getElementById("json-rpc-0")
+        var jsonRpc1 = document.getElementById("json-rpc-1")
+        var jsonRpc2 = document.getElementById("json-rpc-2")
+        var jsonRpc3 = document.getElementById("json-rpc-3")
+        window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+        function eventHandler(event) {
+            var type = event.detail.type
+            var payload = event.detail.payload
+            switch (type) {
+                case "RESPONSE_HAS_ACCOUNT":
+                    responseHasAccount.innerHTML = "> Result : " + payload.hasAccount + " (" + typeof payload.hasAccount + ")";
+                    break
+                case "RESPONSE_HAS_ADDRESS":
+                    responseHasAddress.innerHTML = "> Result : " + payload.hasAddress + " (" + typeof payload.hasAddress + ")";
+                    break
+                case "RESPONSE_ADDRESS":
+                    fromAddress = payload
+                    responseAddress.innerHTML = "> Selected ICX Address : " + payload;
+                    jsonRpc0.disabled = false
+                    jsonRpc1.disabled = false
+                    jsonRpc2.disabled = false
+                    jsonRpc3.disabled = false
+                    break
+                case "RESPONSE_JSON-RPC":
+                    responseScore.value = JSON.stringify(payload);
+                    break
+                case "CANCEL_JSON-RPC":
+                    responseScore.value = null;
+                    break
+                case "RESPONSE_SIGNING":
+                    signingData.value = null
+                    responseSigning.innerHTML = "> Signature : " + JSON.stringify(payload);
+                    break
+                case "CANCEL_SIGNING":
+                    signingData.value = null
+                    responseSigning.value = "> Signature : ";
+                    break
+                default:
+            }
+        }
+        function setRequestScoreForm() {
+            var data = new FormData(requestScoreForm);
+            var type = '';
+            for (const entry of data) { type = entry[1] };
+            switch (type) {
+                case 'read-only':
+                    var callBuilder = new IconBuilder.CallBuilder;
+                    var readOnlyData = callBuilder
+                        .from(fromAddress)
+                        .to('cx43f59485bd34d0c7e9312835d65cb399f6d29651')
+                        .method("hello")
+                        .build()
+                    scoreData.value = JSON.stringify({
+                        "jsonrpc": "2.0",
+                        "method": "icx_call",
+                        "params": readOnlyData,
+                        "id": 50889
+                    })
+                    break;
+                case 'send-transaction':
+                    var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
+                    var callTransactionData = callTransactionBuilder
+                        .from(fromAddress)
+                        .to("cxb20b5ff06ba50aef42c7832958af59f9ae0651e7")
+                        .nid(IconConverter.toBigNumber(3))
+                        .timestamp((new Date()).getTime() * 1000)
+                        .stepLimit(IconConverter.toBigNumber(1000000))
+                        .version(IconConverter.toBigNumber(3))
+                        .method('createToken')
+                        .params({
+                            "price": IconConverter.toHex(10000),
+                            "tokenType": IconConverter.toHex(2)
+                        })
+                        .build()
+                    scoreData.value = JSON.stringify({
+                        "jsonrpc": "2.0",
+                        "method": "icx_sendTransaction",
+                        "params": IconConverter.toRawTransaction(callTransactionData),
+                        "id": 50889
+                    })
+                    break;
+                case 'icx-transfer':
+                    var icxTransactionBuilder = new IconBuilder.IcxTransactionBuilder;
+                    var icxTransferData = icxTransactionBuilder
+                        .from(fromAddress)
+                        .to("hx04d669879227bb24fc32312c408b0d5503362ef0")
+                        .nid(IconConverter.toBigNumber(3))
+                        .value(IconAmount.of(1, IconAmount.Unit.ICX).toLoop())
+                        .timestamp((new Date()).getTime() * 1000)
+                        .version(IconConverter.toBigNumber(3))
+                        .stepLimit(IconConverter.toBigNumber(100000))
+                        .build();
+                    scoreData.value = JSON.stringify({
+                        "jsonrpc": "2.0",
+                        "method": "icx_sendTransaction",
+                        "params": IconConverter.toRawTransaction(icxTransferData),
+                        "id": 50889
+                    })
+                    break;
+                default:
+            }
+        }
+        requestHasAccount.onclick = function () {
+            window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+                detail: {
+                    type: "REQUEST_HAS_ACCOUNT"
+                }
+            }))
+        }
+        requestHasAddress.onclick = function () {
+            window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+                detail: {
+                    type: 'REQUEST_HAS_ADDRESS',
+                    payload: requestHasAddressData.value || requestHasAddressData.placeholder
+                }
+            }))
+        }
+        requestAddress.onclick = function () {
+            window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+                detail: {
+                    type: 'REQUEST_ADDRESS'
+                }
+            }))
+        }
+        requestScore.onclick = function () {
+            responseScore.value = null;
+            if (!scoreData.value) {
+                alert('Check the param data')
+                return
+            }
+            var parsed = JSON.parse(scoreData.value)
+            if (parsed.method === "icx_sendTransaction" && !fromAddress) {
+                alert('Select the ICX Address')
+                return
+            }
+            window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+                detail: {
+                    type: 'REQUEST_JSON-RPC',
+                    payload: parsed
+                }
+            }))
+        }
+        requestSigning.onclick = function () {
+            if (!fromAddress) {
+                alert('Select the ICX Address')
+                return
+            }
+            window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+                detail: {
+                    type: 'REQUEST_SIGNING',
+                    payload: {
+                        from: fromAddress,
+                        hash: signingData.value || signingData.placeholder,
+                    }
+                }
+            }))
+        }
+    </script>
+{%endblock%}

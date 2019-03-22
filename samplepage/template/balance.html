@@ -1,0 +1,105 @@
+{% extends 'original.html' %}
+{% block content %}
+
+<!-- Header -->
+<header class="masthead">
+<div class="container"></div>
+</header>
+<!-- Header end -->
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center"></div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <div class="col-lg-12 text-center">
+                          <h2 class="section-heading text-uppercase">Token Balance</h2>
+                          <br></br>
+                          <br></br>
+                          <button class="btn btn-primary btn-xl text-uppercase" id="request-address">
+                              Load Your Wallet</button>
+                          <br><br>
+                      </div>
+                      <p class="section-heading text-uppercase" id="token-balance">
+                          your Token Balances :
+                      </p>
+                      <div class="col-lg-12 text-center">
+                          <p class="section-heading text-uppercase" id="Call-result">
+                              Load Your Wallet
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+
+
+  <!-- JS code -->
+<script src = "http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js" > </script>
+<script >
+  var IconService = window['icon-sdk-js']
+  var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
+  var IconServices = new IconService(provider)
+  var IconWallet = IconServices.IconWallet
+  var IconAmount = IconServices.IconAmount
+  var IconConverter = IconService.IconConverter
+  var IconBuilder = IconService.IconBuilder
+  
+  var requestaddress = document.getElementById("request-address")
+  var callresult = document.getElementById("Call-result")
+  
+  window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+  
+  
+  function eventHandler(event) {
+      var type = event.detail.type
+      var payload = event.detail.payload
+      switch (type) {
+          case "RESPONSE_ADDRESS":
+              fromAddress = payload
+              balance = new getbalance();
+              balance.then(function(result) {
+                  console.log(result); // "Stuff worked!"
+                  callresult.innerHTML = IconConverter.toBigNumber(result);
+              }, function(err) {
+                  callresult.innerHTML = err;
+                  console.log(err); // Error: "It broke"
+              });
+              break
+          default:
+      }
+  }
+  
+  
+  function getbalance() {
+      var iconCallBuilder = new IconBuilder.CallBuilder;
+      var callTransaction = iconCallBuilder
+          .from(fromAddress)
+          .to('cx89245b4a663f2062a9fe52a219c44c281e1d6c36')
+          .method('balanceOf')
+          .params('')
+          .build()
+
+      data = IconServices.call(callTransaction).execute();
+      console.log(data);
+      return data
+  }
+  
+  requestaddress.onclick = function() {
+          window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+              detail: {
+                  type: 'REQUEST_ADDRESS'
+              }
+          }))
+      };
+</script>
+{% endblock %}
+

@@ -1,0 +1,227 @@
+{% extends 'original.html' %}
+{% load static %}
+{% block content %}
+
+<header class="masthead">
+  <div class="container">
+      <div class="intro-text">
+          <div class="intro-heading text-uppercase">Enjoy Black Jack</div>
+          <button class="btn btn-primary btn-xl text-uppercase" id="request-address">
+              Load Your Wallet</button>
+          <p></p>
+          <h3 class="section-subheading text-muted" id="user-wallet-address">Please load your wallet</h3>
+      </div>
+  </div>
+</header>
+<!-- JSON DATA VIEW -->
+<section class="bg-light" id="portfolio">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <h2 class="section-heading text-uppercase">Check JSON Request Data
+              </h2>
+          </div>
+      </div>
+      <!-- JSON request, response box  -->
+      <div class="row">
+          <div class="col-md-6">
+              <div class="form-group">
+                  <textarea cols="50" data-validation-required-message="Please enter a message." id="score-data" placeholder="Request Json" rows="20"></textarea>
+                  <p class="help-block text-danger"></p>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                  <textarea cols="50" data-validation-required-message="Please enter a message." id="scorere-sponse" placeholder="Response Json" rows="20"></textarea>
+                  <p class="help-block text-danger"></p>
+              </div>
+          </div>
+      </div>
+      <!--  -->
+  </div>
+</section>
+<section class="bg-light" id="portfolio">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <h2 class="section-heading text-uppercase">GameRoom list</h2>
+              <h3 class="section-subheading text-muted">Click to Join.</h3>
+          </div>
+      </div>
+      <div
+          class="row">
+          <!-- 파이썬 SDK 활용 -->
+          {% for key, value in WaitRoom.items %}
+              <div class="col-md-4 col-sm-6 portfolio-item">
+                  <a class="portfolio-link" data-toggle="modal" href='#{{key}}'>
+                      <div class="portfolio-hover">
+                          <div class="portfolio-hover-content">
+                              <i class="fas fa-plus fa-3x"></i>
+                          </div>
+                      </div>
+                      <img class="img-fluid" src='{% static "img/portfolio/01-thumbnail.jpg" %}' alt="">
+                  </a>
+                  <div class="portfolio-caption">
+                      <h4>{{key}}</h4>
+                      <p class="text-muted">{{value.Name}}</p>
+                  </div>
+              </div>
+          {% endfor %}
+          <!-- Sections end -->
+      </div>
+  </div>
+</section>
+{% for key, value in WaitRoom.items %}
+  <!-- 세부페이지 내용 -->
+  <div class="portfolio-modal modal fade" id={{key}} tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="close-modal" data-dismiss="modal">
+                  <div class="lr">
+                      <div class="rl"></div>
+                  </div>
+              </div>
+              <div class="container">
+                  <div class="row">
+                      <div class="col-lg-8 mx-auto">
+                          <div
+                              class="modal-body">
+                              <!-- Project Details Go Here -->
+                              <h2 class="text-uppercase">{{key}}</h2>
+                              <p class="item-intro text-muted-Address">{{value.Address}}</p>
+                              <p class="item-intro text-muted">{{value.Explain}}</p>
+                              <p class="item-intro text-muted">{{value.Prize}}</p>
+                              <p class="item-intro text-muted">{{value.Time}}</p>
+                              <button
+                                  class="btn btn-primary" id="request-to-join" data-dismiss="modal" type="button" value={{value.Address}} onclick="joinbtnclick()">
+                                  <!-- <button class="btn btn-primary" data-dismiss="modal" type="button" onclick = " location.href =  '{{value.Address}}'  "> -->
+                                  Join Room
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+{% endfor %}
+
+<!-- JS code -->
+
+<script src = "http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js" > </script>
+<script>
+var IconService = window['icon-sdk-js']
+var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
+var IconServices = new IconService(provider)
+var IconWallet = IconService.IconWallet
+var IconAmount = IconService.IconAmount
+var IconConverter = IconService.IconConverter
+var IconBuilder = IconService.IconBuilder
+
+var requestaddress = document.getElementById("request-address")
+var Callresult = document.getElementById("Call-result")
+
+var joinbtn = document.getElementById("request-to-join")
+
+var selectedroomaddress = document.getElementById("item-intro text-muted-Address")
+
+var useraddress = document.getElementById("user-wallet-address")
+var scorerequest = document.getElementById("score-data")
+var scoreresponse = document.getElementById("scorere-sponse")
+
+window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+
+
+
+function eventHandler(event) {
+    var type = event.detail.type
+    var payload = event.detail.payload
+    switch (type) {
+        case "RESPONSE_HAS_ACCOUNT":
+            responseHasAccount.innerHTML = "> Result : " + payload.hasAccount + " (" + typeof payload.hasAccount + ")";
+            break
+        case "RESPONSE_HAS_ADDRESS":
+            responseHasAddress.innerHTML = "> Result : " + payload.hasAddress + " (" + typeof payload.hasAddress + ")";
+            break
+        case "RESPONSE_ADDRESS":
+            fromAddress = payload
+            console.log(fromAddress)
+            useraddress.innerHTML = "Your address :" + '<p></p>' + fromAddress
+            break
+        case "RESPONSE_JSON-RPC":
+            txhash = payload
+            console.log(txhash)
+            scoreresponse.innerHTML = JSON.stringify(payload)
+            setTimeout(function() {
+                IconServices.getTransactionResult(payload.result).execute().then(
+                    function(result) {
+                        scoreresponse.innerHTML = JSON.stringify(result);
+                    },
+                    function(error) {
+                        confirm.log(error)
+                    });
+            }, 4000)
+
+
+        default:
+    }
+}
+
+
+
+requestaddress.onclick = function() {
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+        detail: {
+            type: 'REQUEST_ADDRESS'
+        }
+    }))
+}
+
+// joinbtn.onclick = function () {
+function joinbtnclick() {
+    var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
+    var callTransferData = callTransactionBuilder
+        .from(fromAddress)
+        .to("cx89245b4a663f2062a9fe52a219c44c281e1d6c36")
+        .nid(IconConverter.toBigNumber(3))
+        .timestamp((new Date()).getTime() * 1000)
+        .version(IconConverter.toBigNumber(3))
+        .stepLimit(IconConverter.toBigNumber(10000000))
+        .method("joinRoom")
+        .params({
+            "_gameRoomId": joinbtn.value
+        })
+        .build();
+
+    // console.log(callTransferData)
+    scoreData = JSON.stringify({
+        "jsonrpc": "2.0",
+        "method": "icx_sendTransaction",
+        "params": IconConverter.toRawTransaction(callTransferData),
+        "id": 8015
+    });
+    console.log(scoreData)
+    //  data to scorerequest(score-data)
+    scorerequest.innerHTML = scoreData
+
+    var parsed = JSON.parse(scoreData)
+    if (parsed.method === "icx_sendTransaction" && !fromAddress) {
+        alert('Select the ICX Address')
+        return
+    }
+
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+        detail: {
+            type: 'REQUEST_JSON-RPC',
+            payload: parsed
+        }
+    }))
+
+
+}
+
+
+
+</script>
+
+{% endblock %}
