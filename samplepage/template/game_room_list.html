@@ -112,9 +112,7 @@
 <script>
 var IconService = window['icon-sdk-js']
 var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
-var IconServices = new IconService(provider)
-var IconWallet = IconService.IconWallet
-var IconAmount = IconService.IconAmount
+var iconService = new IconService(provider)
 var IconConverter = IconService.IconConverter
 var IconBuilder = IconService.IconBuilder
 
@@ -153,7 +151,7 @@ function eventHandler(event) {
             console.log(txhash)
             scoreresponse.innerHTML = JSON.stringify(payload)
             setTimeout(function() {
-                IconServices.getTransactionResult(payload.result).execute().then(
+                iconService.getTransactionResult(payload.result).execute().then(
                     function(result) {
                         scoreresponse.innerHTML = JSON.stringify(result);
                     },
