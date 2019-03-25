@@ -129,8 +129,6 @@ var scoreresponse = document.getElementById("scorere-sponse")
 
 window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
 
-
-
 function eventHandler(event) {
     var type = event.detail.type
     var payload = event.detail.payload
@@ -164,8 +162,6 @@ function eventHandler(event) {
         default:
     }
 }
-
-
 
 requestaddress.onclick = function() {
     window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
@@ -214,8 +210,6 @@ function joinbtnclick() {
             payload: parsed
         }
     }))
-
-
 }
 
 

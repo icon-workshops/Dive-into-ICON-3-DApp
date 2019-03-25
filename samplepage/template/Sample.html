@@ -286,7 +286,9 @@
         var jsonRpc1 = document.getElementById("json-rpc-1")
         var jsonRpc2 = document.getElementById("json-rpc-2")
         var jsonRpc3 = document.getElementById("json-rpc-3")
+
         window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+
         function eventHandler(event) {
             var type = event.detail.type
             var payload = event.detail.payload

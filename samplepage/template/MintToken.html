@@ -64,6 +64,7 @@
   function eventHandler(event) {
       var type = event.detail.type
       var payload = event.detail.payload
+      
       switch (type) {
           case "RESPONSE_ADDRESS":
               fromAddress = payload
@@ -97,7 +98,6 @@
           }
       }))
   }
-  
   
   requestScore.onclick = function() {
           var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
