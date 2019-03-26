@@ -73,6 +73,7 @@ class TestWelcome(IconIntegrateTestBase):
 
         # Sends the call request
         response = self.process_call(call, self.icon_service)
+        self.assertEqual(response, f"{self._test1.get_address()} hello")
         print(response)
 
     def _use_scrooge_(self, _to: Address, _amount: int):
@@ -84,10 +85,8 @@ class TestWelcome(IconIntegrateTestBase):
             .nonce(100) \
             .method("scrooge") \
             .params({
-
             "_to":_to,
             "_amount":_amount
-
         }) \
             .build()
 

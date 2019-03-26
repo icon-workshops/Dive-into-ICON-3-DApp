@@ -15,7 +15,11 @@ class Welcome(IconScoreBase):
         super().on_update()
 
     @eventlog(indexed=3)
-    def Scrooge(self, _to: Address, _amount: int, _scrooge_get: int, _will_sent: int) -> None:
+    def ScroogeSend(self, _to: Address, _amount: int, _will_sent: int):
+        pass
+
+    @eventlog(indexed=3)
+    def ScroogeGet(self, _owner: Address, _amount: int, _scrooge_get: int):
         pass
 
     @external(readonly=True)
@@ -31,14 +35,15 @@ class Welcome(IconScoreBase):
 
         # calculate scrooge's fee
         _scrooge_get = int(_amount/2)
-        _will_sent = _amount - _scrooge_get
+        _will_sent = int(_amount) - _scrooge_get
 
-        self.icx.send(addr_to=_to, amount= _will_sent)
-        self.icx.send(addr_to=self.owner, amount= _scrooge_get)
+        # send Tx
+        self.icx.send(addr_to=_to, amount=_will_sent)
+        self.icx.send(addr_to=self.owner, amount=_scrooge_get)
 
-        # write eventlog
-        self.Scrooge(self, _to , _will_sent, _scrooge_get, _will_sent)
-        self.Scrooge(self, self.owner, _scrooge_get, _scrooge_get, _will_sent)
+        # write to eventlog
+        self.ScroogeSend(_to , _amount, _will_sent)
+        self.ScroogeGet(self.owner, _amount, _scrooge_get)
 
         return f" I especially discounted you a commission. \n the fee was {_scrooge_get} \n so, {_will_sent} sent to {_to}"
 
