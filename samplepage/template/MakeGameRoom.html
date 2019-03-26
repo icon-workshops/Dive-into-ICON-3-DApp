@@ -45,14 +45,11 @@
 <script src = "http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js" ></script> 
 <script >
   var IconService = window['icon-sdk-js']
-  var HttpProvider = IconService.HttpProvider
-  var IconServices = new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3'))
-  var IconWallet = IconServices.IconWallet
-  var IconAmount = IconServices.IconAmount
+  var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
+  var iconService = new IconService(provider)
   var IconConverter = IconService.IconConverter
   var IconBuilder = IconService.IconBuilder
   
-
   var amount_loop = document.getElementById("amount-loop")
   var requestAddress = document.getElementById("request-address")
   var requestScore = document.getElementById("request-score")
@@ -70,13 +67,12 @@
               break
           case "RESPONSE_JSON-RPC":
               setTimeout(function (hash) {
-                  IconServices.getTransactionResult(payload.result).execute().then(
+                iconService.getTransactionResult(payload.result).execute().then(
                       function(result) {
-                          JSON.stringify(result)
                           scoreresponse.innerHTML = JSON.stringify(result);
                       },
                       function(error) {
-                          confirm.log(error)
+                          console.log(error)
                       });
               }, 4000)
               break
@@ -128,7 +124,6 @@
               }
           }))
       }
-  
 </script>
 {% endblock %}
 

@@ -4,10 +4,10 @@ ICON SCORE의 Sample로 활용한다.
 
 ## 개발환경
 -   Python3.6
--   django 2.1.7
+-   Django 2.1.7
 -   iconSDK(Python)
--   iconSDK(Java Script)
--   OS X (mojave)
+-   iconSDK(JavaScript)
+-   OS X (Mojave)
   
 ## Page
 
@@ -75,7 +75,7 @@ e. Mint Token
 
 1. Clone this repo 
 
-2. start django server 
+2. start Django server 
    
     ```$ cd samplepage/ ```
     ```$ python manage runserver 0.0.0.0:8000```

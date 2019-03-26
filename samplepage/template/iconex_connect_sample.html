@@ -56,11 +56,10 @@
 
     <script src="http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
     <script>
-        var iconService = window['icon-sdk-js']
-        var IconWallet = iconService.IconWallet
-        var IconAmount = iconService.IconAmount
-        var IconConverter = iconService.IconConverter
-        var IconBuilder = iconService.IconBuilder
+        var IconService = window['icon-sdk-js']
+        var IconAmount = IconService.IconAmount
+        var IconConverter = IconService.IconConverter
+        var IconBuilder = IconService.IconBuilder
 
         var requestHasAccount = document.getElementById("request-has-account")
         var responseHasAccount = document.getElementById("response-has-account")

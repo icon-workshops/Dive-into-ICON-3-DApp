@@ -46,9 +46,7 @@
 <script >
   var IconService = window['icon-sdk-js']
   var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
-  var IconServices = new IconService(provider)
-  var IconWallet = IconService.IconWallet
-  var IconAmount = IconService.IconAmount
+  var iconService = new IconService(provider)
   var IconConverter = IconService.IconConverter
   var IconBuilder = IconService.IconBuilder
   
@@ -66,6 +64,7 @@
   function eventHandler(event) {
       var type = event.detail.type
       var payload = event.detail.payload
+      
       switch (type) {
           case "RESPONSE_ADDRESS":
               fromAddress = payload
@@ -73,25 +72,24 @@
   
           case "RESPONSE_JSON-RPC":
               setTimeout(function Tx_result(hash) {
-                  IconServices.getTransactionResult(payload.result).execute().then(
+                  iconService.getTransactionResult(payload.result).execute().then(
                       function(result) {
-                          JSON.stringify(result)
                           scoreresponse.innerHTML = JSON.stringify(result);
                       },
                       function(error) {
-                          confirm.log(error)
+                          console.log(error)
                       });
               }, 4000)
-  
               break
+
           case "CANCEL_JSON-RPC":
               responseScore.value = null;
               break
   
           default:
+              break
       }
   }
-  
   
   requestAddress.onclick = function() {
       window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
@@ -100,7 +98,6 @@
           }
       }))
   }
-  
   
   requestScore.onclick = function() {
           var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;

@@ -47,9 +47,8 @@
 <script >
   var IconService = window['icon-sdk-js']
   var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
-  var IconServices = new IconService(provider)
-  var IconWallet = IconServices.IconWallet
-  var IconAmount = IconServices.IconAmount
+  var iconService = new IconService(provider)
+
   var IconConverter = IconService.IconConverter
   var IconBuilder = IconService.IconBuilder
   
@@ -57,7 +56,6 @@
   var callresult = document.getElementById("Call-result")
   
   window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
-  
   
   function eventHandler(event) {
       var type = event.detail.type
@@ -88,7 +86,7 @@
           .params('')
           .build()
 
-      data = IconServices.call(callTransaction).execute();
+      data = iconService.call(callTransaction).execute();
       console.log(data);
       return data
   }
