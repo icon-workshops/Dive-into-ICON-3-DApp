@@ -34,9 +34,11 @@ class Welcome(IconScoreBase):
         _will_sent = _amount - _scrooge_get
 
         self.icx.send(addr_to=_to, amount= _will_sent)
+        self.icx.send(addr_to=self.owner, amount= _scrooge_get)
 
         # write eventlog
-        self.Scrooge(self, _to , _amount, _scrooge_get, _will_sent)
+        self.Scrooge(self, _to , _will_sent, _scrooge_get, _will_sent)
+        self.Scrooge(self, self.owner, _scrooge_get, _scrooge_get, _will_sent)
 
         return f" I especially discounted you a commission. \n the fee was {_scrooge_get} \n so, {_will_sent} sent to {_to}"
 
