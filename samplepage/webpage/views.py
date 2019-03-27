@@ -9,7 +9,7 @@ DIR_PATH = os.path.abspath(os.path.dirname('__file__'))
 #POST, GET 따로 받을 수 있습니다.
 def make_game_room(request):
     if request.method == "GET":
-        return render(request, "MakeGameRoom.html")
+        return render(request, "make_game_room.html")
     elif request.method == "POST":
         return HttpResponse("it works  !!")
     else:
@@ -17,7 +17,7 @@ def make_game_room(request):
 
 
 def mint_token(request):
-    return render(request, "MintToken.html")
+    return render(request, "mint_token.html")
 
 
 def sample(request):
