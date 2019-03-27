@@ -22,7 +22,6 @@ class TestWelcome(IconIntegrateTestBase):
     SCORE_PROJECT = os.path.abspath(os.path.join(DIR_PATH, '..'))
 
     def setUp(self):
-        print("---------------------setup-------------------------")
         print(self.SCORE_PROJECT)
         super().setUp()
 
@@ -30,13 +29,10 @@ class TestWelcome(IconIntegrateTestBase):
         # if you want to send request to network, uncomment next line and set self.TEST_HTTP_ENDPOINT_URI_V3
         self.icon_service = IconService(HTTPProvider(self.TEST_HTTP_ENDPOINT_URI_V3))
 
-        print("---------------------[setups]wallet load-------------------------")
         self.test_wallet_two = self._wallet_array[0]
 
 
         # install SCORE
-        print("---------------------[setups]SCORE Deploy-------------------------")
-        # self._score_address = self._deploy_score(to = "cx0000000000000000000000000000000000000000")['scoreAddress']
         self._score_address = self._deploy_score()['scoreAddress']
 
     def _deploy_score(self, to: str = SCORE_INSTALL_ADDRESS) -> dict:
@@ -77,7 +73,7 @@ class TestWelcome(IconIntegrateTestBase):
 
         print(response)
 
-    def _use_scrooge_(self, _to: Address, _amount: int):
+    def _use_scrooge_(self, _to: Address, _ratio: int):
         transaction_use_scrooge = CallTransactionBuilder() \
             .from_(self._test1.get_address()) \
             .to(self._score_address) \
@@ -87,7 +83,7 @@ class TestWelcome(IconIntegrateTestBase):
             .method("scrooge") \
             .params({
             "_to":_to,
-            "_amount":_amount
+            "_ratio":_ratio
         }) \
             .build()
 
@@ -97,23 +93,18 @@ class TestWelcome(IconIntegrateTestBase):
 
 
     def test_send_test(self):
-        print("----------------[test sendTx]------------------------")
-        print("----------------[sendTx] Balance ------------------------")
-
 
         _balance_test1 = self.icon_service.get_balance(self._test1.address)
         _balance_test2 = self.icon_service.get_balance(self.test_wallet_two.address)
 
-        print(f"before send icx from test1, test1's balance : {_balance_test1}")
-        print(f"before send icx from test2, test2's balance : {_balance_test2}")
-
-        print("----------------[sendTx] Balance check before sendtx ------------------------")
-
-        tx_result = self._use_scrooge_(_to=self.test_wallet_two.address, _amount=100_000)
+        tx_result = self._use_scrooge_(_to=self._test1.address, _ratio=2)
         print(tx_result)
 
         self.assertTrue('status' in tx_result)
         self.assertEqual(1, tx_result['status'])
+        self.assertTrue('ScroogeGet' in tx_result)
+        self.assertTrue('ScroogeSend' in tx_result)
+
 
 
 

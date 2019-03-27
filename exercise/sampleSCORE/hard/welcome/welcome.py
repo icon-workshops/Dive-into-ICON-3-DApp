@@ -26,8 +26,9 @@ class Welcome(IconScoreBase):
     def welcome(self) -> str:
         return f"Hello, {self.msg.sender} !!! Welcome to ICON Workshop 2019!!!"
 
+    @payable
     @external
-    def scrooge(self, _to: Address, _amount: int) -> str:
+    def scrooge(self, _to: Address, _ratio: int) -> str:
 
         # check sender's balance is bigger than send value
 
@@ -37,5 +38,5 @@ class Welcome(IconScoreBase):
 
         # write to eventlog
 
-        return f" I especially discounted you a commission. \n the fee was {_scrooge_get} \n so, {_will_sent} sent to {_to}"
+        return "Done."
 

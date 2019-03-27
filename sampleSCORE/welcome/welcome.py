@@ -26,24 +26,25 @@ class Welcome(IconScoreBase):
     def welcome(self) -> str:
         return f"Hello, {self.msg.sender} !!! Welcome to ICON Workshop 2019!!!"
 
+    @payable
     @external
-    def scrooge(self, _to: Address, _amount: int) -> str:
+    def scrooge(self, _to: Address, _ratio: int) -> str:
 
         # check sender's balance is bigger than send value
-        if (self.icx.get_balance(self.msg.sender) < _amount):
+        if (self.icx.get_balance(self.msg.sender) < self.msg.value):
             self.revert(f"Hey, {self.msg.sender} !!! you have only {self.icx.get_balance(self.msg.sender)} !!!")
 
         # calculate scrooge's fee
-        _scrooge_get = int(_amount/2)
-        _will_sent = int(_amount) - _scrooge_get
+        _scrooge_get = int(self.msg.value/_ratio)
+        _will_sent = self.msg.value - _scrooge_get
 
         # send Tx
         self.icx.send(addr_to=_to, amount=_will_sent)
         self.icx.send(addr_to=self.owner, amount=_scrooge_get)
 
         # write to eventlog
-        self.ScroogeSend(_to , _amount, _will_sent)
-        self.ScroogeGet(self.owner, _amount, _scrooge_get)
+        self.ScroogeSend(_to , self.msg.value, _will_sent)
+        self.ScroogeGet(self.owner,self.msg.value, _scrooge_get)
 
-        return f" I especially discounted you a commission. \n the fee was {_scrooge_get} \n so, {_will_sent} sent to {_to}"
+        return "Done."
 

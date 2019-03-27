@@ -62,11 +62,11 @@
       var payload = event.detail.payload
       switch (type) {
           case "RESPONSE_ADDRESS":
+            // 응답받은 payload인스턴스의 type 키의 값이  RESPONSE_ADDRESS 일때, 수행될 로직
               fromAddress = payload
-              balance = new getbalance();
+              balance = new welcome();
               balance.then(function(result) {
                   console.log(result); // "Stuff worked!"
-                //   callresult.innerHTML = IconConverter.toBigNumber(result);
                   callresult.innerHTML = result;
               }, function(err) {
                   callresult.innerHTML = err;
@@ -77,8 +77,8 @@
       }
   }
   
-  
-  function getbalance() {
+//   입력된 SCORE에서 welcome 이라는 메서드를 실행시킵니다.
+  function welcome() {
       var iconCallBuilder = new IconBuilder.CallBuilder;
       var callTransaction = iconCallBuilder
           .from(fromAddress)
@@ -91,7 +91,8 @@
       console.log(data);
       return data
   }
-  
+
+//  requestaddress 버튼이 눌렸을때, 수행되는 작업입니다. dispatchEvent를 통해서 CustomEvent를 발생시킵니다. 데이터는 ICONex 지갑으로 전달됩니다.
   requestaddress.onclick = function() {
           window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
               detail: {

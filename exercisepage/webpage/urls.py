@@ -17,10 +17,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.room_list),
+    path('', views.welcome),
     path('sample/', views.sample),
-    path('roomlist/', views.room_list),
-    path('room/', views.make_game_room),
-    path('token/', views.mint_token),
-    path('balance/', views.balance),
+    path('welcome/', views.welcome),
+    path('scrooge/', views.scrooge),
+
+    # exercise_page
+    path('exercise-scrooge/', views.exercise_scrooge),
+    path('exercise-welcome/', views.exercise_welcome),
+
+
 ]

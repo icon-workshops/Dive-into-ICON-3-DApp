@@ -36,7 +36,6 @@ class TestWelcome(IconIntegrateTestBase):
 
         # install SCORE
         print("---------------------[setups]SCORE Deploy-------------------------")
-        # self._score_address = self._deploy_score(to = "cx0000000000000000000000000000000000000000")['scoreAddress']
         self._score_address = self._deploy_score()['scoreAddress']
 
     def _deploy_score(self, to: str = SCORE_INSTALL_ADDRESS) -> dict:
@@ -73,7 +72,8 @@ class TestWelcome(IconIntegrateTestBase):
 
         # Sends the call request
         response = self.process_call(call, self.icon_service)
-        self.assertEqual(response, f"{self._test1.get_address()} hello")
+        self.assertEqual(response, f"Hello, {self._test1.get_address()} !!! Welcome to ICON Workshop 2019!!!")
+
         print(response)
 
     def _use_scrooge_(self, _to: Address, _amount: int):
@@ -113,6 +113,4 @@ class TestWelcome(IconIntegrateTestBase):
 
         self.assertTrue('status' in tx_result)
         self.assertEqual(1, tx_result['status'])
-
-
 

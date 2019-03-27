@@ -1,4 +1,4 @@
-{% extends 'original.html' %}
+{% extends '../original.html' %}
 {% block content %}
 
 <!-- Header -->
@@ -63,10 +63,11 @@
       switch (type) {
           case "RESPONSE_ADDRESS":
               fromAddress = payload
+              
               balance = new getbalance();
+
               balance.then(function(result) {
                   console.log(result); // "Stuff worked!"
-                //   callresult.innerHTML = IconConverter.toBigNumber(result);
                   callresult.innerHTML = result;
               }, function(err) {
                   callresult.innerHTML = err;
@@ -79,13 +80,14 @@
   
   
   function getbalance() {
+
       var iconCallBuilder = new IconBuilder.CallBuilder;
+
+    //   iconCallBuilder 를 통해 트랜잭션을 build 해 보세요
       var callTransaction = iconCallBuilder
-          .from(fromAddress)
-          .to('cxf0d978bbf2bc027beda7964db7ea43f9313e0007')
-          .method('welcome')
-          .params('')
-          .build()
+
+
+
 
       data = iconService.call(callTransaction).execute();
       console.log(data);

@@ -41,7 +41,7 @@
       </div>
   </section>
 
-  <!-- JS code -->
+<!-- JS code -->  
 <script src = "http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js" ></script> 
 <script >
   var IconService = window['icon-sdk-js']
@@ -51,6 +51,7 @@
   var IconBuilder = IconService.IconBuilder
   var IconAmount = IconService.IconAmount
 
+// HTML에서 사용된 객체들을 Js 로 불러옵니다.
   var amount_loop = document.getElementById("amount-loop")
   var requestAddress = document.getElementById("request-address")
   var requestScore = document.getElementById("request-score")
@@ -59,11 +60,14 @@
   
   window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
   
+//   eventHandler입니다. eventHandler 함수는 코드의 최하단에서 ICONex에게 전달된 후, ICONex에게서 온 응답을 처리합니다. 
   function eventHandler(event) {
       var type = event.detail.type
       var payload = event.detail.payload
       switch (type) {
           case "RESPONSE_ADDRESS":
+//  ICONex에서 온 응답의 타입이 RESPONSE_ADDRESS 일 경우, 처리되는 로직입니다. 
+//  RESPONSE_ADDRESS는 REQUEST_ADDRESS의 응답이며, ICONex GUI 페이지를 통해 사용자의 지갑 주소를 응답합니다. 
               fromAddress = payload
               break
           case "RESPONSE_JSON-RPC":
@@ -81,7 +85,7 @@
       }
   }
   
-  
+//   requestAddress 버튼이 눌렸을때 수행됩니다. ICONex 로 CustomEvent를 발생시킵니다. 이는 'REQUEST_ADDRESS' 를 ICONex 로 전달합니다.
   requestAddress.onclick = function() {
       window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
           detail: {
@@ -90,9 +94,13 @@
       }))
   }
   
+// requestScore 버튼이 눌렸을때 수행됩니다. 
+// CallTransactionBuilder 를 통해 CallTransaction을 생성합니다. 
+// 이를 build하여 JSON.stringify 를 통해 JSON포멧으로 바꿉니다.
+// JSON 포멧으로 바뀐 트랜잭션 데이터는 scoreData.value에 할당됩니다.
   requestScore.onclick = function() {
     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
-          var callTransactionData = callTransactionBuilder
+    var callTransactionData = callTransactionBuilder
               .from(fromAddress)
               .to("cxbff5fa7adc97f515070f2490d5a47aa927859549")
               .nid(IconConverter.toBigNumber(3))
@@ -114,12 +122,14 @@
               "id": 8015
           })
   
+//  fromAddress 값의 유무를 체크하고, 없을경우 alert를 통해서 에러를 호출합니다.
           var parsed = JSON.parse(scoreData.value)
           if (parsed.method === "icx_sendTransaction" && !fromAddress) {
               alert('Select the ICX Address')
               return
           }
-  
+
+//  dispatchEvent를 통해서 CustomEvent를 발생시킵니다. 위에서 지정한 parsed 대이터가 ICONex 지갑으로 전달됩니다.
           window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
               detail: {
                   type: 'REQUEST_JSON-RPC',
