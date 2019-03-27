@@ -73,7 +73,8 @@ class TestWelcome(IconIntegrateTestBase):
 
         # Sends the call request
         response = self.process_call(call, self.icon_service)
-        self.assertEqual(response, f"{self._test1.get_address()} hello")
+        self.assertEqual(response, f"Hello, {self._test1.get_address()} !!! Welcome to ICON Workshop 2019!!!")
+
         print(response)
 
     def _use_scrooge_(self, _to: Address, _amount: int):
@@ -113,6 +114,7 @@ class TestWelcome(IconIntegrateTestBase):
 
         self.assertTrue('status' in tx_result)
         self.assertEqual(1, tx_result['status'])
+
 
 
 

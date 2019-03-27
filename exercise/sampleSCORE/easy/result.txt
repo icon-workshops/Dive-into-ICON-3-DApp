@@ -1,0 +1,25 @@
+---------------------setup-------------------------
+/Users/nara/Documents/Git/Dive-into-ICON-3-DApp/exercise/sampleSCORE/easy/welcome
+---------------------[setups]wallet load-------------------------
+---------------------[setups]SCORE Deploy-------------------------
+F---------------------setup-------------------------
+/Users/nara/Documents/Git/Dive-into-ICON-3-DApp/exercise/sampleSCORE/easy/welcome
+---------------------[setups]wallet load-------------------------
+---------------------[setups]SCORE Deploy-------------------------
+----------------[test call]------------------------
+Hello, hxe7af5fcfd8dfc67530a01a0e403882687528dfcb !!! Welcome to ICON Workshop 2019!!!
+.---------------------setup-------------------------
+/Users/nara/Documents/Git/Dive-into-ICON-3-DApp/exercise/sampleSCORE/easy/welcome
+---------------------[setups]wallet load-------------------------
+---------------------[setups]SCORE Deploy-------------------------
+----------------[test sendTx]------------------------
+----------------[sendTx] Balance ------------------------
+before send icx from test1, test1's balance : 800459999999999999990000000
+before send icx from test2, test2's balance : 0
+----------------[sendTx] Balance check before sendtx ------------------------
+{'txHash': '0xa536c0fb0d7d8d83673fd2b05fb7e9bb16ed4e0b9510dfd433e91dce948c1e48', 'blockHeight': 1902, 'blockHash': '0xf0599c1785dab9005b99c42211f5c159900b9812064674f7515e858291d4c884', 'txIndex': 0, 'to': 'cx28adfc558c260f6957891b88e16b72cb61062e9d', 'stepUsed': 1066100, 'stepPrice': 0, 'cumulativeStepUsed': 1066100, 'eventLogs': [{'scoreAddress': 'cx28adfc558c260f6957891b88e16b72cb61062e9d', 'indexed': ['ScroogeSend(Address,int,int)', 'hx852c8e0d419028db95f9ef28f9d277a4754244a9', '0x186a0', '0xc350'], 'data': []}, {'scoreAddress': 'cx28adfc558c260f6957891b88e16b72cb61062e9d', 'indexed': ['ScroogeGet(Address,int,int)', 'hxe7af5fcfd8dfc67530a01a0e403882687528dfcb', '0x186a0', '0xc350'], 'data': []}], 'logsBloom': b'000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000002640000000000000000000000000000000000000000000000000040000000000200000000000000000000000000000000000000000000000000000a0000000002000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000440000000001000000000000000000000000000000000000000000000000000000000000000205000000000000', 'status': 1}
+.
+----------------------------------------------------------------------
+Ran 2 tests in 30.265s
+
+OK
