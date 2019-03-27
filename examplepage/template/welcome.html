@@ -18,7 +18,7 @@
               <div class="row">
                   <div class="col-lg-12 text-center">
                       <div class="col-lg-12 text-center">
-                          <h2 class="section-heading text-uppercase">Token Balance</h2>
+                          <h2 class="section-heading text-uppercase">Welcome SCORE</h2>
                           <br></br>
                           <br></br>
                           <button class="btn btn-primary btn-xl text-uppercase" id="request-address">
@@ -26,7 +26,7 @@
                           <br><br>
                       </div>
                       <p class="section-heading text-uppercase" id="token-balance">
-                          your Token Balances :
+                          SCORE Says 
                       </p>
                       <div class="col-lg-12 text-center">
                           <p class="section-heading text-uppercase" id="Call-result">
@@ -66,7 +66,8 @@
               balance = new getbalance();
               balance.then(function(result) {
                   console.log(result); // "Stuff worked!"
-                  callresult.innerHTML = IconConverter.toBigNumber(result);
+                //   callresult.innerHTML = IconConverter.toBigNumber(result);
+                  callresult.innerHTML = result;
               }, function(err) {
                   callresult.innerHTML = err;
                   console.log(err); // Error: "It broke"
@@ -81,8 +82,8 @@
       var iconCallBuilder = new IconBuilder.CallBuilder;
       var callTransaction = iconCallBuilder
           .from(fromAddress)
-          .to('cx89245b4a663f2062a9fe52a219c44c281e1d6c36')
-          .method('balanceOf')
+          .to('cxf0d978bbf2bc027beda7964db7ea43f9313e0007')
+          .method('welcome')
           .params('')
           .build()
 

@@ -10,12 +10,12 @@
   <div class="container">
       <div class="row">
           <div class="col-lg-12 text-center">
-              <h2 class="section-heading text-uppercase">Make Room</h2>
+              <h2 class="section-heading text-uppercase">Scrooge</h2>
           </div>
       </div>
       <div class="row">
           <div class="col-lg-12">
-              <p><input class="form-amount" data-validation-required-message="Please enter value." id="amount-loop" placeholder="prize_per_game / default is 10 " required="required" style="width:1110px" type="int"></p>
+              <p><input class="form-amount" data-validation-required-message="Please enter value." id="amount-loop" placeholder="ICX to send " required="required" style="width:1110px" type="int"></p>
                   <div class="row">
                       <div class="col-md-6">
                           <div class="form-group">
@@ -33,7 +33,7 @@
                       <div class="col-lg-12 text-center">
                           <div id="success"></div>
                           <button class="btn btn-primary btn-xl text-uppercase" id="request-address">Load Wallet</button>
-                          <button class="btn btn-primary btn-xl text-uppercase" id="request-score">Make   it !!!!!!!!!!</button>
+                          <button class="btn btn-primary btn-xl text-uppercase" id="request-score">Send my ICX !!!!!!!!!!</button>
                       </div>
                   </div>
               </div>
@@ -49,7 +49,8 @@
   var iconService = new IconService(provider)
   var IconConverter = IconService.IconConverter
   var IconBuilder = IconService.IconBuilder
-  
+  var IconAmount = IconService.IconAmount
+
   var amount_loop = document.getElementById("amount-loop")
   var requestAddress = document.getElementById("request-address")
   var requestScore = document.getElementById("request-score")
@@ -90,17 +91,19 @@
   }
   
   requestScore.onclick = function() {
-          var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
+    var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
           var callTransactionData = callTransactionBuilder
               .from(fromAddress)
-              .to("cx89245b4a663f2062a9fe52a219c44c281e1d6c36")
+              .to("cxbff5fa7adc97f515070f2490d5a47aa927859549")
               .nid(IconConverter.toBigNumber(3))
               .timestamp((new Date()).getTime() * 1000)
               .stepLimit(IconConverter.toBigNumber(10000000))
+              .value(IconAmount.of(amount_loop.value, IconAmount.Unit.ICX).toLoop())
               .version(IconConverter.toBigNumber(3))
-              .method('createRoom')
+              .method('scrooge')
               .params({
-                  "_prizePerGame": amount_loop.value
+                  "_to": "hx9505040fc8883f9d4b287d1dbcd49bb2cd80748a",
+                  "_ratio": IconConverter.toHex(2)
               })
               .build()
 
