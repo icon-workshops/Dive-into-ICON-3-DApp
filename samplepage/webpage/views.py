@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . import UseSDK
+from . import game_room_list
 import os
 from django.http.response import HttpResponse
 
@@ -21,7 +21,7 @@ def mint_token(request):
 
 
 def sample(request):
-    return render(request, "Sample.html")
+    return render(request, "iconex_connect_sample.html")
 
 
 def balance(request):
@@ -29,7 +29,7 @@ def balance(request):
 
 
 def room_list(request):
-    _data=UseSDK.JsonRPCCalls()
+    _data=game_room_list.JsonRPCCalls()
     _data=_data.show_game_room_list()
     _out_data={}
     _room_number = 0
