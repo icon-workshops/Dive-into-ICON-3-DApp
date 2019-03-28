@@ -1,0 +1,142 @@
+{% extends 'original.html' %}
+{% load static %}
+{% block content %}
+<!-- Header -->
+<header class="masthead">
+  <div class="container"></div>
+</header>
+<!-- end -->
+<section id="contact">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <h2 class="section-heading text-uppercase">Scrooge</h2>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+              <p><input class="form-amount" data-validation-required-message="Please enter value." id="amount-loop" placeholder="ICX to send " required="required" style="width:1110px" type="int"></p>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <textarea cols="50" data-validation-required-message="Please enter a message." id="score-data" placeholder="Request Json" rows="20"></textarea>
+                              <p class="help-block text-danger"></p>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <textarea cols="50" data-validation-required-message="Please enter a message." id="score-response" placeholder="Response Json" rows="20"></textarea>
+                              <p class="help-block text-danger"></p>
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-lg-12 text-center">
+                          <div id="success"></div>
+                          <button class="btn btn-primary btn-xl text-uppercase" id="request-address">Load Wallet</button>
+                          <button class="btn btn-primary btn-xl text-uppercase" id="request-score">Send my ICX !!!!!!!!!!</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+<!-- JS code -->  
+<script src = "http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js" ></script> 
+<script >
+  var IconService = window['icon-sdk-js']
+  var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
+  var iconService = new IconService(provider)
+  var IconConverter = IconService.IconConverter
+  var IconBuilder = IconService.IconBuilder
+  var IconAmount = IconService.IconAmount
+
+  // HTML에서 사용된 객체들을 JS 로 불러옵니다.
+  var amount_loop = document.getElementById("amount-loop")
+  var requestAddress = document.getElementById("request-address")
+  var requestScore = document.getElementById("request-score")
+  var scoreData = document.getElementById("score-data")
+  var scoreresponse = document.getElementById("score-response")
+  
+  window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+  
+  // eventHandler 함수는 ICONex에게서 온 응답을 처리합니다. 
+  function eventHandler(event) {
+      var type = event.detail.type
+      var payload = event.detail.payload
+      switch (type) {
+
+          //  ICONex에서 온 응답의 타입이 RESPONSE_ADDRESS 일 경우, 처리되는 로직입니다. 
+          //  RESPONSE_ADDRESS는 REQUEST_ADDRESS의 응답이며, 사용자의 지갑 주소를 가져올 수 있습니다.  
+          case "RESPONSE_ADDRESS":
+              fromAddress = payload
+              break
+          case "RESPONSE_JSON-RPC":
+              setTimeout(function (hash) {
+                iconService.getTransactionResult(payload.result).execute().then(
+                      function(result) {
+                          scoreresponse.innerHTML = JSON.stringify(result);
+                      },
+                      function(error) {
+                          console.log(error)
+                      });
+              }, 4000)
+              break
+          default:
+      }
+  }
+  
+  // requestAddress 버튼을 눌렀을때 수행됩니다. 이는 'REQUEST_ADDRESS' 를 ICONex 로 전달합니다.
+  requestAddress.onclick = function() {
+      window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+          detail: {
+              type: 'REQUEST_ADDRESS'
+          }
+      }))
+  }
+  
+  // requestScore 버튼이 눌렸을때 수행됩니다. 
+  // CallTransactionBuilder 를 통해 CallTransaction을 생성합니다. 
+  // 이를 build하여 JSON.stringify 를 통해 JSON sting 으로 변홥합니다.
+  requestScore.onclick = function() {
+    var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
+    var callTransactionData = callTransactionBuilder
+              .from(fromAddress)
+              .to("cxbff5fa7adc97f515070f2490d5a47aa927859549")
+              .nid(IconConverter.toBigNumber(3))
+              .timestamp((new Date()).getTime() * 1000)
+              .stepLimit(IconConverter.toBigNumber(10000000))
+              .value(IconAmount.of(amount_loop.value, IconAmount.Unit.ICX).toLoop())
+              .version(IconConverter.toBigNumber(3))
+              .method('scrooge')
+              .params({
+                  "_to": "hx9505040fc8883f9d4b287d1dbcd49bb2cd80748a",
+                  "_ratio": IconConverter.toHex(2)
+              })
+              .build()
+
+          scoreData.value = JSON.stringify({
+              "jsonrpc": "2.0",
+              "method": "icx_sendTransaction",
+              "params": IconConverter.toRawTransaction(callTransactionData),
+              "id": 8015
+          })
+  
+          // fromAddress 값의 유무를 체크하고, 없을경우 alert를 통해서 에러를 호출합니다.
+          var parsed = JSON.parse(scoreData.value)
+          if (parsed.method === "icx_sendTransaction" && !fromAddress) {
+              alert('Select the ICX Address')
+              return
+          }
+
+          // dispatchEvent를 통해서 CustomEvent를 발생시킵니다. 위에서 지정한 parsed 데이터가 ICONex 지갑으로 전달됩니다.
+          window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+              detail: {
+                  type: 'REQUEST_JSON-RPC',
+                  payload: parsed
+              }
+          }))
+      }
+</script>
+{% endblock %}
+

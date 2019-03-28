@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . import UseSDK
+from . import game_room_list
 import os
 from django.http.response import HttpResponse
 
@@ -9,7 +9,7 @@ DIR_PATH = os.path.abspath(os.path.dirname('__file__'))
 #POST, GET 따로 받을 수 있습니다.
 def make_game_room(request):
     if request.method == "GET":
-        return render(request, "MakeGameRoom.html")
+        return render(request, "make_game_room.html")
     elif request.method == "POST":
         return HttpResponse("it works  !!")
     else:
@@ -17,11 +17,11 @@ def make_game_room(request):
 
 
 def mint_token(request):
-    return render(request, "MintToken.html")
+    return render(request, "mint_token.html")
 
 
 def sample(request):
-    return render(request, "Sample.html")
+    return render(request, "iconex_connect_sample.html")
 
 
 def balance(request):
@@ -29,7 +29,7 @@ def balance(request):
 
 
 def room_list(request):
-    _data=UseSDK.JsonRPCCalls()
+    _data=game_room_list.JsonRPCCalls()
     _data=_data.show_game_room_list()
     _out_data={}
     _room_number = 0

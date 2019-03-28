@@ -1,0 +1,105 @@
+{% extends 'original.html' %}
+{% block content %}
+
+<!-- Header -->
+<header class="masthead">
+<div class="container"></div>
+</header>
+<!-- Header end -->
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12 text-center"></div>
+      </div>
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <div class="col-lg-12 text-center">
+                          <h2 class="section-heading text-uppercase">Welcome SCORE</h2>
+                          <br></br>
+                          <br></br>
+                          <button class="btn btn-primary btn-xl text-uppercase" id="request-address">
+                              Load Your Wallet</button>
+                          <br><br>
+                      </div>
+                      <p class="section-heading text-uppercase" id="token-balance">
+                          SCORE Says 
+                      </p>
+                      <div class="col-lg-12 text-center">
+                          <p class="section-heading text-uppercase" id="Call-result">
+                              Load Your Wallet
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
+
+
+  <!-- JS code -->
+<script src = "http://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js" > </script>
+<script >
+  var IconService = window['icon-sdk-js']
+  var provider = new IconService.HttpProvider('https://bicon.net.solidwallet.io/api/v3')
+  var iconService = new IconService(provider)
+
+  var IconConverter = IconService.IconConverter
+  var IconBuilder = IconService.IconBuilder
+  
+  var requestaddress = document.getElementById("request-address")
+  var callresult = document.getElementById("Call-result")
+  
+  window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
+  
+  function eventHandler(event) {
+      var type = event.detail.type
+      var payload = event.detail.payload
+      switch (type) {
+          case "RESPONSE_ADDRESS":
+              // 응답받은 값이  RESPONSE_ADDRESS 일때, 수행될 로직
+              fromAddress = payload
+              balance = new welcome();
+              balance.then(function(result) {
+                  console.log(result); // "Stuff worked!"
+                  callresult.innerHTML = result;
+              }, function(err) {
+                  callresult.innerHTML = err;
+                  console.log(err); // Error: "It broke"
+              });
+              break
+          default:
+      }
+  }
+  
+  // 입력된 SCORE에서 welcome 이라는 함수를 실행시킵니다.
+  function welcome() {
+      var iconCallBuilder = new IconBuilder.CallBuilder;
+      var callTransaction = iconCallBuilder
+          .from(fromAddress)
+          .to('cxf0d978bbf2bc027beda7964db7ea43f9313e0007')
+          .method('welcome')
+          .params('')
+          .build()
+
+      data = iconService.call(callTransaction).execute();
+      console.log(data);
+      return data
+  }
+
+  // requestaddress 버튼이 눌렸을때 수행되는 작업입니다. dispatchEvent를 통해서 CustomEvent를 발생시킵니다. 데이터는 ICONex 지갑으로 전달됩니다.
+  requestaddress.onclick = function() {
+          window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+              detail: {
+                  type: 'REQUEST_ADDRESS'
+              }
+          }))
+      };
+</script>
+{% endblock %}
+
