@@ -77,6 +77,6 @@ e. Mint Token
 
 2. start Django server 
    
-    ```$ cd samplepage/ ```
-    ```$ python manage runserver 0.0.0.0:8000```
+    ```$ cd samplepage/ ```  
+    ```$ python3 manage.py runserver 0.0.0.0:8000```
 
