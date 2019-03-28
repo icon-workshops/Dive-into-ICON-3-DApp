@@ -27,16 +27,19 @@ For this third workshop, following environments are required. If you have any is
 
 ## Today's Goal 
 
-TBD
+Learn how to attach UI to SCORE with ICONex connect, JS SDK
 
 ### Workshop Outline
 
-TBD
+Step 1. What is a DApp?  
+Step 2. Review   
+Step 3. How to build a DApp  
+Step 4. Hands-on Exercise
+
 
 ### Sample WebPage
 * Simple Blackjack Webpage
 
- 
  
 ## Useful Links
 
