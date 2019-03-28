@@ -1,6 +1,7 @@
-# BLACK JACK 
-ICON SCORE인 Black Jack 에 GUI를 추가하여 사용자가 접근하기 쉽게 한다.  
-ICON SCORE의 Sample로 활용한다.
+# Welcome
+ICON SCORE인 welcome 에 ICONex, JS SDK를 통하여 GUI를 구현하였습니다.  
+Exercise 페이지의 빈 부분을 채워 넣는 실습을 할 수 있습니다. 
+
 
 ## 개발환경
 -   Python3.6
@@ -12,71 +13,69 @@ ICON SCORE의 Sample로 활용한다.
 ## Page
 
 ```
-a. Room List
-b. Sample
-c. Make Game Room
-d. Check Token Balance
-e. Mint Token
+a. Welcome
+b. Exercise-welcome
+c. Scrooge
+d. Exercise-scrooge
+e. iconex_connect_sample
 ```
 
 
-#### a. Room List
+#### a. Welcome
 
-```/roomlist```   
+```/welcome```   
 
-  1. 현재 존재하는 게임룸 오래된 순서대로 출력
-  2. Testnet에 배포되어있는 Sample Game SCORE
-  
-      ``` SCORE address : cx89245b4a663f2062a9fe52a219c44c281e1d6c36 ``` 
-  
-  3. 2의 SCORE에서 show_game_room_list 의 icx_call 결과 
-  4. Click 으로 세부내용 확인
-  5. 세부내용 페이지에서 진행 가능한 게임일 경우, Join 기능
-  6. Python SDK 를 활용하여 Django 에서 list 를 전달
-
-#### b. Sample  
-
-```/Sample```  
-
-  1. ICONex Wallet에서 제공한 Sample 을 구현
-
-#### c. Make Game Room
-
-``` /room ```
-
-1. Game Room 을 만든다.
-2. 입력한 개수의 토큰만큼을 게임 참가비로 하는 게임을 만듭니다.
-3. **LOAD WALLET** 버튼을 통해 지갑을 로드한 후, **MAKE IT** 버튼을 통해 방을 만드는 트랜잭션을 만들 수 있습니다.
-4. 좌측 TextBox는 바라보고있는 노드에게 보내질 JSON Request 를 보여줍니다.
-5. 우측 TextBox는 바라보고있는 노드에게 보낸 request에 대한 Response를 보여줍니다.
+  1. ICONex로 지갑을 로드할 경우, SCORE에 정의된 메세지를 호출합니다.
+  2. Read-only 인 ```Welcome``` 의 결과를 받아오고, 받아온 결과를 호출하도록 JS SDK, ICONex 로 구현되어있습니다.
 
 
-#### d. Check Token Balance
+#### b. Exercise-Welcome  
 
-``` /balance ```
+```/exercise-welcome```  
 
-1. ICONex 를 통해, BlackJack Game에 있는 BalanceOf(msg.sender) 메서드를 호출하여, 현재 사용자의 Balance를 조회한다. 
-2. **LOAD WALLET** 버튼을 통해 지갑을 로드합니다.
-3. 지갑을 로드한 후, 즉시 선택한 지갑주소의 토큰 잔액이 화면에 보입니다. (Loop 단위입니다.)
+  1. ICONex로 지갑을 로드할 경우, SCORE에 정의된 메세지를 호출합니다.
+  2. exercise-welcome 페이지는 ```/welcome``` 페이지와 같은 페이지 입니다. JS를 수정하여 완성해 주세요
 
 
-#### e. Mint Token
+#### c. Scrooge
 
-``` /token ```
+``` /scrooge ```
 
-1. 사용자가 원하는 만큼의 Token을 mint 한다.
-2. BlackJack Game에 있는 mintToken() 메서드를 통해 Token을 Mint 합니다.
-3. Sign에는 ICONex를 활용한다.
+  1. SCORE에 ```CallTransaction``` 을 통해 value와 파라미터를 전달합니다.
+  2. 생성된 트랜잭션을 화면의 왼쪽에 있는 textarea, "score-data" 에서 확인할 수 있습니다.
+  3. 트랜잭션의 결과는 화면의 우측에 있는 textarea, "score-response" 에서 확인할 수 있습니다.
+
+
+#### d. Scrooge
+
+``` /exercise-scrooge ```
+
+  1.  exercise-scrooge 페이지는 ```/scrooge``` 페이지와 동일한 페이지 입니다.
+  2.  scrooge 페이지에서 ```CallTransaction``` 부분이 지워져 있습니다. JS를 수정하여 완성해 주세요
+
+
+#### e. iconex_connect_sample
+
+``` /sample ```
+
+  1.  iconex_connect_sample 페이지는 아이콘의 공식 지갑인 [ICONex, chrome extention](https://github.com/icon-project/iconex_chrome_extension) 의 [예제](https://github.com/icon-project/iconex_chrome_extension/blob/master/docs/iconex_connect/iconex_connect_sample.html) 페이지와 동일한 페이지 입니다.
 
 
 
+## Start 
 
-## Start Sample 
-
-1. Clone this repo 
-
-2. start Django server 
+1. start Django server 
    
-    ```$ cd samplepage/ ```
-    ```$ python manage runserver 0.0.0.0:8000```
+    ```$ cd ./exercisepage ```  
+    ```$ python manage.py runserver 0.0.0.0:8000```
 
+## Link
+
+1. iconex_chrome_extension  
+   https://github.com/icon-project/iconex_chrome_extension
+
+2. icon-sdk-js  
+   https://github.com/icon-project/icon-sdk-js
+
+3. ICONex  
+   https://github.com/icon-project/iconex_chrome_extension/tree/master/docs/iconex_connect

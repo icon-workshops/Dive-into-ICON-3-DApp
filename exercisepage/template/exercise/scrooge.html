@@ -68,10 +68,12 @@
               break
           case "RESPONSE_JSON-RPC":
           
-        // setTimeout을 통해서, 일정시간 이후에 수행되는 부분입니다.
+              // setTimeout을 통해서, 일정시간 이후에 수행되는 부분입니다.
               setTimeout(function (hash) {
                 iconService.getTransactionResult(
-        // 이부분에 알맞은 값을 넣어주세요
+                    
+                    // 이부분에 알맞은 값을 넣어주세요
+
                 ).execute().then(
                       function(result) {
                           scoreresponse.innerHTML = JSON.stringify(result);
@@ -98,6 +100,7 @@
     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
 
     // callTransactionBuilder 를 통해서 트랜잭션을 build 해 주세요
+    // 트랜잭션에 들어가는 숫자는 모두 Bignumber 이어야 합니다.
     // SCORE 주소 : cxbff5fa7adc97f515070f2490d5a47aa927859549
     // nid : 3
     // 지금 타임스탬프 : (new Date()).getTime() * 1000
@@ -105,7 +108,7 @@
     // value : amount_loop 객체에서 사용자가 입력한 값을 받아올 수 있습니다.
     // version : 3
     // 메서드이름 : "scrooge"
-    // 메서드가 받는 파라미터 : "_to"("hx9505040fc8883f9d4b287d1dbcd49bb2cd80748a"를 입력해주세요), "_ratio"
+    // 메서드가 받는 파라미터 : "_to"("hx9505040fc8883f9d4b287d1dbcd49bb2cd80748a"를 입력해주세요), "_ratio"("IconConverter.toHex(2)"를 입력해주세요)
 
     var callTransactionData = callTransactionBuilder
     
