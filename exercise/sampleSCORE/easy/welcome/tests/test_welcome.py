@@ -25,9 +25,9 @@ class TestWelcome(IconIntegrateTestBase):
         print(self.SCORE_PROJECT)
         super().setUp()
 
-        # self.icon_service = None
+        self.icon_service = None
         # if you want to send request to network, uncomment next line and set self.TEST_HTTP_ENDPOINT_URI_V3
-        self.icon_service = IconService(HTTPProvider(self.TEST_HTTP_ENDPOINT_URI_V3))
+        # self.icon_service = IconService(HTTPProvider(self.TEST_HTTP_ENDPOINT_URI_V3))
 
         self.test_wallet_two = self._wallet_array[0]
 
@@ -92,15 +92,13 @@ class TestWelcome(IconIntegrateTestBase):
 
     def test_send_test(self):
 
-        _balance_test1 = self.icon_service.get_balance(self._test1.address)
-        _balance_test2 = self.icon_service.get_balance(self.test_wallet_two.address)
-
         tx_result = self._use_scrooge_(_to=self._test1.address, _ratio=2)
         print(tx_result)
 
         self.assertTrue('status' in tx_result)
         self.assertEqual(1, tx_result['status'])
         self.assertTrue( 'ScroogeGet(Address,int,int)' in tx_result['eventLogs'][1]['indexed'][0])
+        self.assertTrue( 'ScroogeSend(Address,int,int)' in tx_result['eventLogs'][0]['indexed'][0])
 
 
 
