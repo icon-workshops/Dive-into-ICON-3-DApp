@@ -91,9 +91,7 @@ class TestWelcome(IconIntegrateTestBase):
         tx_result = self.process_transaction(signed_transaction, self.icon_service)
         return tx_result
 
-
-    def test_send_test(self):
-
+    def test_scrooge(self):
         tx_result = self._use_scrooge_(_to=self._test1.address, _ratio=2)
         print(tx_result)
 
