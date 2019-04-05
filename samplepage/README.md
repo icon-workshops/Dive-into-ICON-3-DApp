@@ -76,7 +76,15 @@ e. Mint Token
 1. Clone this repo 
 
 2. start Django server 
-   
-    ```$ cd samplepage/ ```  
-    ```$ python3 manage.py runserver 0.0.0.0:8000```
+
+
+    ```
+    $ cd ./samplepage
+    
+    $ pip3 install -r requirements.txt
+    
+    $ python3 manage.py runserver 0.0.0.0:8000    
+    ```
+    
+
 
