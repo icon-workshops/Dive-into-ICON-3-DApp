@@ -69,10 +69,9 @@ e. iconex_connect_sample
     ```
     $ cd ./exercisepage
     
-    $ python3 manage.py runserver 0.0.0.0:8000
-    
     $ pip3 install -r requirements.txt
     
+    $ python3 manage.py runserver 0.0.0.0:8000    
     ```
 
 ## Link
