@@ -66,8 +66,14 @@ e. iconex_connect_sample
 
 1. start Django server 
    
-    ```$ cd ./exercisepage ```    
-    ```$ python3 manage.py runserver 0.0.0.0:8000```
+    ```
+    $ cd ./exercisepage
+    
+    $ python3 manage.py runserver 0.0.0.0:8000
+    
+    $ pip3 install -r requirements.txt
+    
+    ```
 
 ## Link
 
