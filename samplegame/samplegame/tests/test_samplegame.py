@@ -100,6 +100,16 @@ class TestSampleGame(IconIntegrateTestBase):
         response = self.process_call(call, self.icon_service)
         return response
 
+    def _get_status(self, _from: KeyWallet):
+        call = CallBuilder().from_(_from.get_address()) \
+            .to(self._sample_game_score_address) \
+            .method("getStatus") \
+            .build()
+
+        # Sends the call request
+        response = self.process_call(call, self.icon_service)
+        return response
+
     def _get_chip_balance(self, _from: KeyWallet):
         call = CallBuilder().from_(_from.get_address()) \
             .to(self._sample_game_score_address) \
@@ -293,6 +303,9 @@ class TestSampleGame(IconIntegrateTestBase):
         tx_result_create_room = self._create_room(self.test1_wallet)
         self.assertTrue('status' in tx_result_create_room)
         self.assertEqual(1, tx_result_create_room['status'])
+
+        check_status = self._get_status(self.test1_wallet)
+        self.assertEqual(self.test1_wallet.get_address(), check_status)
 
         tx_result_create_room = self._create_room(self.test2_wallet)
         self.assertTrue('status' in tx_result_create_room)

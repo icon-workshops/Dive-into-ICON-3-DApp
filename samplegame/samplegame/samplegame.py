@@ -115,6 +115,11 @@ class SampleGame(IconScoreBase):
 
         return response
 
+    @external(readonly=True)
+    def getStatus(self) -> Address:
+        joined_room = self._DDB_in_game_room[self.msg.sender]
+        return joined_room if joined_room is not None else "You are not in any Gameroom"
+
     @external
     def createRoom(self, _prizePerGame: int = 10):
         # Check whether 'self.msg.sender' is now participating to game room or not
