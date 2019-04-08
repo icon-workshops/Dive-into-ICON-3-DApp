@@ -93,7 +93,7 @@
                               <p class="item-intro text-muted">{{value.Prize}}</p>
                               <p class="item-intro text-muted">{{value.Time}}</p>
                               <button
-                                  class="btn btn-primary" id={{key}} data-dismiss="modal" type="button" value={{value.Address}} onclick="joinbtnclick('{{value.Address}}')">
+                                  class="btn btn-primary" data-dismiss="modal" type="button" value={{value.Address}} onclick="joinbtnclick('{{value.Address}}')">
                                   Join Room
                               </button>
                           </div>
@@ -169,10 +169,7 @@ requestaddress.onclick = function() {
     }))
 }
 
-// joinbtn.onclick = function () {
 function joinbtnclick(Address) {
-    // console.log(joinbtn.value)
-    console.log(Address)
     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
     var callTransferData = callTransactionBuilder
         .from(fromAddress)
@@ -187,7 +184,6 @@ function joinbtnclick(Address) {
         })
         .build();
 
-    // console.log(callTransferData)
     scoreData = JSON.stringify({
         "jsonrpc": "2.0",
         "method": "icx_sendTransaction",
