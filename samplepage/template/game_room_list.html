@@ -93,8 +93,7 @@
                               <p class="item-intro text-muted">{{value.Prize}}</p>
                               <p class="item-intro text-muted">{{value.Time}}</p>
                               <button
-                                  class="btn btn-primary" id="request-to-join" data-dismiss="modal" type="button" value={{value.Address}} onclick="joinbtnclick()">
-                                  <!-- <button class="btn btn-primary" data-dismiss="modal" type="button" onclick = " location.href =  '{{value.Address}}'  "> -->
+                                  class="btn btn-primary" id={{key}} data-dismiss="modal" type="button" value={{value.Address}} onclick="joinbtnclick('{{value.Address}}')">
                                   Join Room
                               </button>
                           </div>
@@ -119,7 +118,6 @@ var IconBuilder = IconService.IconBuilder
 var requestaddress = document.getElementById("request-address")
 var Callresult = document.getElementById("Call-result")
 
-var joinbtn = document.getElementById("request-to-join")
 
 var selectedroomaddress = document.getElementById("item-intro text-muted-Address")
 
@@ -172,7 +170,9 @@ requestaddress.onclick = function() {
 }
 
 // joinbtn.onclick = function () {
-function joinbtnclick() {
+function joinbtnclick(Address) {
+    // console.log(joinbtn.value)
+    console.log(Address)
     var callTransactionBuilder = new IconBuilder.CallTransactionBuilder;
     var callTransferData = callTransactionBuilder
         .from(fromAddress)
@@ -183,7 +183,7 @@ function joinbtnclick() {
         .stepLimit(IconConverter.toBigNumber(10000000))
         .method("joinRoom")
         .params({
-            "_gameRoomId": joinbtn.value
+            "_gameRoomId": Address
         })
         .build();
 
