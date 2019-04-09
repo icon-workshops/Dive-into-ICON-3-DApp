@@ -100,10 +100,24 @@ class TestSampleGame(IconIntegrateTestBase):
         response = self.process_call(call, self.icon_service)
         return response
 
+    def _get_status(self, _from: KeyWallet):
+        params = {"_gameroomId": _from.get_address()}
+        call = CallBuilder().from_(_from.get_address())\
+            .to(self._sample_game_score_address) \
+            .method("getStatus") \
+            .params(params) \
+            .build()
+
+        # Sends the call request
+        response = self.process_call(call, self.icon_service)
+        return response
+
     def _get_chip_balance(self, _from: KeyWallet):
-        call = CallBuilder().from_(_from.get_address()) \
+        params = {"_from": _from.get_address()}
+        call = CallBuilder()\
             .to(self._sample_game_score_address) \
             .method("getChipBalance") \
+            .params(params) \
             .build()
 
         # Sends the call request
@@ -163,7 +177,6 @@ class TestSampleGame(IconIntegrateTestBase):
             .nid(3) \
             .nonce(100) \
             .method("toggleReady") \
-            .params({}) \
             .build()
 
         signed_transaction_toggle_ready = SignedTransaction(transaction_toggle_ready, _from)
@@ -218,16 +231,19 @@ class TestSampleGame(IconIntegrateTestBase):
         tx_result_fix = self.process_transaction(signed_transaction_fix, self.icon_service)
         return tx_result_fix
 
-    def _show_mine(self, _from: KeyWallet = KeyWallet.create()):
-        call = CallBuilder().from_(_from.get_address()) \
+    def _show_mine(self, _from: KeyWallet):
+        params = {"_from": _from.get_address()}
+        call = CallBuilder().from_(_from.get_address())\
             .to(self._sample_game_score_address) \
             .method("showMine") \
+            .params(params) \
             .build()
 
         response = self.process_call(call, self.icon_service)
         return response
 
     def _get_results(self, _from: KeyWallet):
+
         call = CallBuilder().from_(_from.get_address()) \
             .to(self._sample_game_score_address) \
             .method("getResults") \
@@ -293,6 +309,10 @@ class TestSampleGame(IconIntegrateTestBase):
         tx_result_create_room = self._create_room(self.test1_wallet)
         self.assertTrue('status' in tx_result_create_room)
         self.assertEqual(1, tx_result_create_room['status'])
+
+        status = self._get_status(self.test1_wallet)
+        self.assertEqual('inactive', status['status'])
+        self.assertEqual(f"{self.test1_wallet.get_address()} : {False}", status["user_ready_status"][0])
 
         tx_result_create_room = self._create_room(self.test2_wallet)
         self.assertTrue('status' in tx_result_create_room)
@@ -366,13 +386,26 @@ class TestSampleGame(IconIntegrateTestBase):
         self.assertTrue('status' in tx_result_toggle_ready)
         self.assertEqual(1, tx_result_toggle_ready['status'])
 
+        status = self._get_status(self.test1_wallet)
+        print(status)
+        self.assertEqual('inactive', status['status'])
+        self.assertEqual(f"{self.test1_wallet.get_address()} : {True}", status['user_ready_status'][0])
+
         tx_result_game_start = self._game_start(self.test1_wallet)
         self.assertTrue('status' in tx_result_game_start)
         self.assertEqual(0, tx_result_game_start['status'])
 
+        status = self._get_status(self.test1_wallet)
+        self.assertEqual('inactive', status['status'])
+        self.assertEqual(f"{self.test1_wallet.get_address()} : {True}", status['user_ready_status'][0])
+
         tx_result_toggle_ready = self._toggle_ready(self.test2_wallet)
         self.assertTrue('status' in tx_result_toggle_ready)
         self.assertEqual(1, tx_result_toggle_ready['status'])
+
+        status = self._get_status(self.test1_wallet)
+        self.assertEqual('inactive', status['status'])
+        self.assertEqual(f"{self.test2_wallet.get_address()} : {True}", status["user_ready_status"][1])
 
         tx_result_hit = self._hit(self.test1_wallet)
         self.assertTrue('status' in tx_result_hit)
@@ -385,7 +418,8 @@ class TestSampleGame(IconIntegrateTestBase):
         tx_result_game_start = self._game_start(self.test1_wallet)
         self.assertTrue('status' in tx_result_game_start)
         self.assertEqual(1, tx_result_game_start['status'])
-        print(tx_result_game_start)
+
+        check_status = self._get_status(self.test1_wallet)
 
         tx_result_game_start = self._game_start(self.test1_wallet)
         self.assertTrue('status' in tx_result_game_start)
@@ -416,6 +450,7 @@ class TestSampleGame(IconIntegrateTestBase):
         tx_result_fix = self._fix(self.test2_wallet)
         self.assertTrue('status' in tx_result_fix)
         self.assertEqual(1, tx_result_fix['status'])
+        print(tx_result_fix)
 
         result_get_results = self._get_results(self.test1_wallet)
         print(result_get_results)

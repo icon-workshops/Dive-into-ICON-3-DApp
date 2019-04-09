@@ -67,7 +67,7 @@ class SampleGame(IconScoreBase):
         else:
             revert("Input params must be Contract Address")
 
-    def on_update(self, **kwargs) -> None:
+    def on_update(self) -> None:
         super().on_update()
         pass
 
@@ -95,11 +95,6 @@ class SampleGame(IconScoreBase):
         chip.bet(bet_from, self.address, amount)
 
     @external(readonly=True)
-    def balanceOf(self) -> int:
-        chip = self.create_interface_score(self._VDB_token_address.get(), ChipInterface)
-        return chip.balanceOf(self.msg.sender)
-
-    @external(readonly=True)
     def showGameRoomList(self) -> list:
         response = []
         game_room_list = self.game_room_list
@@ -113,6 +108,20 @@ class SampleGame(IconScoreBase):
             room_has_vacant_seat = "is Full" if len(participants) > 1 else "has a vacant seat"
             response.append(f"{game_room_id} : ({len(participants)} / 2). The room {room_has_vacant_seat}. Prize : {prize_per_game}. Creation time : {creation_time}")
 
+        return response
+
+    @external(readonly=True)
+    def getStatus(self, _gameroomId: Address) -> dict:
+        gameroom_dict = json_loads(self._DDB_game_room[_gameroomId])
+        active = "active" if gameroom_dict["active"] else "inactive"
+
+        participants = gameroom_dict["participants"]
+        user_ready_status = [participant + " : " + str(self._DDB_ready[Address.from_string(participant)]) for participant in participants]
+
+        response = {
+            "status": active,
+            "user_ready_status": user_ready_status
+        }
         return response
 
     @external
@@ -268,9 +277,9 @@ class SampleGame(IconScoreBase):
                 pass
 
     @external(readonly=True)
-    def getChipBalance(self) -> int:
+    def getChipBalance(self, _from: Address) -> int:
         chip = self.create_interface_score(self._VDB_token_address.get(), ChipInterface)
-        return chip.balanceOf(self.msg.sender)
+        return chip.balanceOf(_from)
 
     @external
     def toggleReady(self):
@@ -318,8 +327,8 @@ class SampleGame(IconScoreBase):
             self._DDB_ready[Address.from_string(participant)] = False
 
     @external(readonly=True)
-    def showMine(self) -> str:
-        hand = self._DDB_hand[self.msg.sender]
+    def showMine(self, _from: Address) -> str:
+        hand = self._DDB_hand[_from]
         return hand
 
     @external
@@ -385,7 +394,6 @@ class SampleGame(IconScoreBase):
 
         if self._check_participants_fix(game_room_id) or self.block.height - self._DDB_game_start_time[game_room_id] > 60:
             self.calculate(game_room_id)
-            self.Calculate(game_room_id)
 
     def calculate(self, game_room_id: Address = None):
         self.Calculate(game_room_id)
