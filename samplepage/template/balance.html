@@ -83,8 +83,10 @@
       var callTransaction = iconCallBuilder
           .from(fromAddress)
           .to('cx89245b4a663f2062a9fe52a219c44c281e1d6c36')
-          .method('balanceOf')
-          .params('')
+          .method('getChipBalance')
+          .params({
+              "_from" : fromAddress
+          })
           .build()
 
       data = iconService.call(callTransaction).execute();
