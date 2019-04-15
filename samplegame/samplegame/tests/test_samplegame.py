@@ -104,7 +104,20 @@ class TestSampleGame(IconIntegrateTestBase):
         params = {"_gameroomId": _from.get_address()}
         call = CallBuilder().from_(_from.get_address())\
             .to(self._sample_game_score_address) \
-            .method("getStatus") \
+            .method("getGameRoomStatus") \
+            .params(params) \
+            .build()
+
+        # Sends the call request
+        response = self.process_call(call, self.icon_service)
+        return response
+
+    def _get_user_status(self, _from: KeyWallet):
+        params = {"_userId": _from.get_address()}
+
+        call = CallBuilder().from_(_from.get_address()) \
+            .to(self._sample_game_score_address) \
+            .method("getUserStatus") \
             .params(params) \
             .build()
 
@@ -309,6 +322,13 @@ class TestSampleGame(IconIntegrateTestBase):
         tx_result_create_room = self._create_room(self.test1_wallet)
         self.assertTrue('status' in tx_result_create_room)
         self.assertEqual(1, tx_result_create_room['status'])
+
+
+        user_status = self._get_user_status(self.test1_wallet)
+        self.assertEqual(self.test1_wallet.get_address(), user_status)
+
+        user_status = self._get_user_status(self.test2_wallet)
+        self.assertEqual(None, user_status)
 
         status = self._get_status(self.test1_wallet)
         self.assertEqual('inactive', status['status'])

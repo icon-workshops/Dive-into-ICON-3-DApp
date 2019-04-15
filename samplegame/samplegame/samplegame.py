@@ -111,7 +111,7 @@ class SampleGame(IconScoreBase):
         return response
 
     @external(readonly=True)
-    def getStatus(self, _gameroomId: Address) -> dict:
+    def getGameRoomStatus(self, _gameroomId: Address) -> dict:
         gameroom_dict = json_loads(self._DDB_game_room[_gameroomId])
         active = "active" if gameroom_dict["active"] else "inactive"
 
@@ -123,6 +123,10 @@ class SampleGame(IconScoreBase):
             "user_ready_status": user_ready_status
         }
         return response
+
+    @external(readonly=True)
+    def getUserStatus(self, _userId: Address) -> Address:
+        return self._DDB_in_game_room[_userId]
 
     @external
     def createRoom(self, _prizePerGame: int = 10):

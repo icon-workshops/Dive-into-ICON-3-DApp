@@ -65,3 +65,9 @@ This sample SCORE implements the game 'BLACKJACK' with customized rules
   - Card : Class which contains information about a card
   - Hand : Class which contains information about player's hand(card list).
   - Gameroom : Class which contains information about gameroom
+
+## Installation Guide
+### Steps to follow when installing samplegame SCORE
+1. chips SCORE the IRC2 token must be pre-deployed before deploying the samplegame SCORE (You also can find the sample SCORE for chips in github repo)
+2. The samplegame SCORE requires the CA of IRC2 token like `chip SCORE`  as an argument which will be used as a currency in game
+3. So if you want to deploy the samplesgame SCORE on blockchain network, you need check the params named `_tokenAddress`. which means the SCORE Address(CA) of pre-deployed chip SCORE

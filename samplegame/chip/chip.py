@@ -88,6 +88,7 @@ class Chip(IconScoreBase):
         if not self.msg.sender.is_contract:
             revert("This method should be invoked by CA not EOA")
 
+        self._total_supply.set(self._total_supply.get() + _amount)
         self._balances[self.tx.origin] = self._balances[self.tx.origin] + _amount * (10 ** self._decimals.get())
 
     @external
@@ -123,6 +124,7 @@ class Chip(IconScoreBase):
         self.Transfer(self.msg.sender, _to, _value, _data)
 
     def _burn(self, address: Address, amount: int):
+        self._total_supply.set(self._total_supply.get() - amount)
         self._balances[address] = self._balances[address] - amount
 
     @external
