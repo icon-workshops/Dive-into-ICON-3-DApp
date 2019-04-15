@@ -70,9 +70,6 @@
                 iconService.getTransactionResult(payload.result).execute().then(
                       function(result) {
                           scoreresponse.innerHTML = JSON.stringify(result);
-                      },
-                      function(error) {
-                          console.log(error)
                       });
               }, 4000)
               break

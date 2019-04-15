@@ -139,12 +139,10 @@ function eventHandler(event) {
             break
         case "RESPONSE_ADDRESS":
             fromAddress = payload
-            console.log(fromAddress)
             useraddress.innerHTML = "Your address :" + '<p></p>' + fromAddress
             break
         case "RESPONSE_JSON-RPC":
             txhash = payload
-            console.log(txhash)
             scoreresponse.innerHTML = JSON.stringify(payload)
             setTimeout(function() {
                 iconService.getTransactionResult(payload.result).execute().then(
@@ -187,9 +185,7 @@ function joinbtnclick(Address) {
         "params": IconConverter.toRawTransaction(callTransferData),
         "id": 8015
     });
-    console.log(scoreData)
     scorerequest.innerHTML = scoreData
-
     var parsed = JSON.parse(scoreData)
     if (parsed.method === "icx_sendTransaction" && !fromAddress) {
         alert('Select the ICX Address')

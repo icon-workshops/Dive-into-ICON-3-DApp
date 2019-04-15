@@ -66,11 +66,9 @@
               fromAddress = payload
               balance = new getbalance();
               balance.then(function(result) {
-                  console.log(result); // "Stuff worked!"
                   callresult.innerHTML = IconConverter.toBigNumber(result);
               }, function(err) {
                   callresult.innerHTML = err;
-                  console.log(err); // Error: "It broke"
               });
               break
           default:
@@ -90,7 +88,6 @@
           .build()
 
       data = iconService.call(callTransaction).execute();
-      console.log(data);
       return data
   }
   
