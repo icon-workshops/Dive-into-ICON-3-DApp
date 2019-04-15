@@ -186,13 +186,6 @@ function eventHandler(event) {
             }, 4000)
 
 
-            setInterval(function() {
-                gameResults().then(
-                    function(result) {
-                        wholeGameResult.innerHTML = result.value;
-                    });
-
-            }, 5000);
             break
 
         case "RESPONSE_JSON-RPC":
@@ -223,6 +216,16 @@ requestAddress.onclick = function() {
         }
     }))
 }
+
+setInterval(function() {
+    gameResults().then(
+        function(result) {
+            wholeGameResult.innerHTML = result;
+        });
+
+}, 5000);
+
+
 
 function showMine(){
     var iconCallBuilder = new IconBuilder.CallBuilder;
@@ -409,7 +412,6 @@ function gameRoomStatus(_gameroomId) {
 function gameResults() {
     var iconCallBuilder = new IconBuilder.CallBuilder;
     var callTransaction = iconCallBuilder
-        .from(fromAddress)
         .to(ScoreAddress)
         .method('getResults')
         .params()

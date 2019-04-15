@@ -150,9 +150,6 @@ function eventHandler(event) {
                 iconService.getTransactionResult(payload.result).execute().then(
                     function(result) {
                         scoreresponse.innerHTML = JSON.stringify(result);
-                    },
-                    function(error) {
-                        confirm.log(error)
                     });
             }, 4000)
 
@@ -191,7 +188,6 @@ function joinbtnclick(Address) {
         "id": 8015
     });
     console.log(scoreData)
-    //  data to scorerequest(score-data)
     scorerequest.innerHTML = scoreData
 
     var parsed = JSON.parse(scoreData)
