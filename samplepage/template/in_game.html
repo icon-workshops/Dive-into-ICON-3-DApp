@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6" id="in-game-div">
+                        <div class="col-md-6" id="in-game-div" style="flex-start">
 
                             <p>
                             <button class="btn btn-primary" id="start-btn" onclick=clickStartButton() type="button" >
@@ -93,7 +93,7 @@
                                 HIT  !
                             </button>
                             <button class="btn btn-primary" id="fix" onclick=clickFixnHitButton("fix") type="button" >
-                                FIX  !
+                                STAND  !
                             </button>
                             </p>
 
@@ -146,7 +146,8 @@ var startBtn = document.getElementById("start-btn")
 
 window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler, false);
 
-startBtn.style.display = "none"
+document.getElementById("in-game-div").style.alignItems = "flex-start";
+startBtn.style.cssText = "text-align:center; display:none; margin: 0 auto"
 
 function eventHandler(event) {
     var type = event.detail.type
@@ -169,7 +170,8 @@ function eventHandler(event) {
 
 
                         if(fromAddress == GameRoomID){
-                            startBtn.style.display = "block"
+                            startBtn.style.cssText = "text-align:center; display:block; margin: 0 auto"
+
                         }
 
                         gameRoomStatus(GameRoomID).then(function (result) {
