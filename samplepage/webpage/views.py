@@ -47,4 +47,9 @@ def room_list(request):
     return render(request, "game_room_list.html", {"WaitRoom" : _out_data})
 
 
+def in_game(request):
+    return render(request, "in_game.html")
+
+
+
 

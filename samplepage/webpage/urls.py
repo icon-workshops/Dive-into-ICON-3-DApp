@@ -23,4 +23,5 @@ urlpatterns = [
     path('room/', views.make_game_room),
     path('token/', views.mint_token),
     path('balance/', views.balance),
+    path('in-game/', views.in_game),
 ]
