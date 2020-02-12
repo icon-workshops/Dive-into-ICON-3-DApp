@@ -1,4 +1,4 @@
-Django==2.1.7
+Django==2.2.10
 earlgrey==0.0.4
 eth-hash==0.2.0
 eth-keyfile==0.5.1
